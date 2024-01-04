@@ -4,8 +4,8 @@ Draw on your github contribution graph
 
 # TODO
 
-[ ] - set email
-[ ] - logging
-[ ] - refactor git operations
-[ ] - add tests
-[ ] - Use git plumbing
+- [ ] set email
+- [ ] logging
+- [ ] refactor git operations
+- [ ] add tests
+- [ ] Use git plumbing
