@@ -40,9 +40,9 @@ func getDates(points []Point) []time.Time {
 func pointToDate(p Point) time.Time {
 	distance := ((p.X * 7) + 1) + p.Y
 	// there are no pixels before this pixel
-	firstDay := time.Date(2021, time.January, 1, 0, 0, 0, 0, time.Local).Weekday()
+	firstDay := time.Date(2019, time.January, 1, 0, 0, 0, 0, time.Local).Weekday()
 	dayOfYear := distance - int(firstDay)
-	return time.Date(2021, time.January, dayOfYear, 0, 0, 0, 0, time.Local)
+	return time.Date(2019, time.January, dayOfYear, 0, 0, 0, 0, time.Local)
 }
 
 func initRepo(path string) error {
