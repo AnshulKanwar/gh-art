@@ -43,6 +43,7 @@ func getDates(points []Point, year int) []time.Time {
 	return dates
 }
 
+// TODO: return error if point falls in another year
 func pointToDate(p Point, year int) time.Time {
 	distance := ((p.X * 7) + 1) + p.Y
 	// there are no pixels before this pixel
@@ -65,7 +66,7 @@ func initRepo(config Config, path string) error {
 		return err
 	}
 
-	if err := os.WriteFile("README.md", []byte("gh-art"), 0666); err != nil {
+	if err := os.WriteFile("README.md", []byte("graphitti"), 0666); err != nil {
 		return err
 	}
 
