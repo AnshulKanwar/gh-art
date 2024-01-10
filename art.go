@@ -14,10 +14,11 @@ type Point struct {
 type Config struct {
 	Name string
 	Email string
+	Year int
 }
 
 func GenerateArt(art []Point, config Config, path string) error {
-	dates := getDates(art)
+	dates := getDates(art, config.Year)
 
 	if err := initRepo(config, path); err != nil {
 		return err
@@ -32,22 +33,22 @@ func GenerateArt(art []Point, config Config, path string) error {
 	return nil
 }
 
-func getDates(points []Point) []time.Time {
+func getDates(points []Point, year int) []time.Time {
 	dates := []time.Time{}
 
 	for _, p := range points {
-		dates = append(dates, pointToDate(p))
+		dates = append(dates, pointToDate(p, year))
 	}
 
 	return dates
 }
 
-func pointToDate(p Point) time.Time {
+func pointToDate(p Point, year int) time.Time {
 	distance := ((p.X * 7) + 1) + p.Y
 	// there are no pixels before this pixel
-	firstDay := time.Date(2019, time.January, 1, 0, 0, 0, 0, time.Local).Weekday()
+	firstDay := time.Date(year, time.January, 1, 0, 0, 0, 0, time.Local).Weekday()
 	dayOfYear := distance - int(firstDay)
-	return time.Date(2019, time.January, dayOfYear, 0, 0, 0, 0, time.Local)
+	return time.Date(year, time.January, dayOfYear, 0, 0, 0, 0, time.Local)
 }
 
 func initRepo(config Config, path string) error {
