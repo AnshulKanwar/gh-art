@@ -11,10 +11,15 @@ type Point struct {
 	Y int
 }
 
-func GenerateArt(art []Point, path string) error {
+type Config struct {
+	Name string
+	Email string
+}
+
+func GenerateArt(art []Point, config Config, path string) error {
 	dates := getDates(art)
 
-	if err := initRepo(path); err != nil {
+	if err := initRepo(config, path); err != nil {
 		return err
 	}
 
@@ -45,7 +50,7 @@ func pointToDate(p Point) time.Time {
 	return time.Date(2019, time.January, dayOfYear, 0, 0, 0, 0, time.Local)
 }
 
-func initRepo(path string) error {
+func initRepo(config Config, path string) error {
 	if err := os.Chdir(path); err != nil {
 		return err
 	}
@@ -55,11 +60,29 @@ func initRepo(path string) error {
 		return err
 	}
 
+	if err := configureGit(config); err != nil {
+		return err
+	}
+
 	if err := os.WriteFile("README.md", []byte("gh-art"), 0666); err != nil {
 		return err
 	}
 
 	cmd = exec.Command("git", "add", ".")
+	if err := cmd.Run(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func configureGit(config Config) error {
+	cmd := exec.Command("git", "config", "--local", "user.name", config.Name)
+	if err := cmd.Run(); err != nil {
+		return err
+	}
+
+	cmd = exec.Command("git", "config", "--local", "user.email", config.Email)
 	if err := cmd.Run(); err != nil {
 		return err
 	}
