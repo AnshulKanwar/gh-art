@@ -66,7 +66,7 @@ func initRepo(config Config, path string) error {
 		return err
 	}
 
-	if err := os.WriteFile("README.md", []byte("graphitti"), 0666); err != nil {
+	if err := os.WriteFile("README.md", []byte("Graphitti"), 0666); err != nil {
 		return err
 	}
 
@@ -94,7 +94,7 @@ func configureGit(config Config) error {
 
 // TODO: make sure we cd or just give path
 func commit(date time.Time) error {
-	cmd := exec.Command("git", "commit", "-m", "gh-art", "--allow-empty", "--date", date.String())
+	cmd := exec.Command("git", "commit", "-m", "graphitti", "--allow-empty", "--date", date.String())
 	if err := cmd.Run(); err != nil {
 		return err
 	}
